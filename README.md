@@ -4,7 +4,7 @@
 
 把独立温湿度传感器、空调、风扇、开关、加湿器和除湿机组合成一个可配置节点的 Home Assistant 控制器。
 
-**初始版本 0.1.0：支持 HACS 自定义仓库安装。需要 Home Assistant 2026.2.3 或更新版本。尚未验证真实家电。**
+**初始测试版 0.1.0：支持 HACS 自定义仓库安装。需要 Home Assistant 2026.2.3 或更新版本。32 项 Linux 自动测试通过，尚未验证真实家电。**
 
 ## 功能
 
@@ -26,7 +26,7 @@ HACS → 右上角菜单 → 自定义仓库，添加：
 https://github.com/aemediatodd/advanced-comfort-controller
 ```
 
-类别选择 **Integration / 集成**，下载后重启 Home Assistant。随后在 **设置 → 设备与服务 → 添加集成** 搜索 **Advanced Comfort Controller**。
+类别选择 **Integration / 集成**，在版本选择中启用 **显示测试版本 / Show beta versions**，选择 `v0.1.0`，下载后重启 Home Assistant。随后在 **设置 → 设备与服务 → 添加集成** 搜索 **Advanced Comfort Controller**。
 
 [一键打开 HACS 仓库](https://my.home-assistant.io/redirect/hacs_repository/?owner=aemediatodd&repository=advanced-comfort-controller&category=integration)
 
