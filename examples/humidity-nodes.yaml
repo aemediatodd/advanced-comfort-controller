@@ -1,0 +1,90 @@
+# primary: humidifier-domain dehumidifier; auxiliaries: [humidifier, fan].
+# Delta is measured RH minus target RH, in percentage points.
+- name: 强除湿
+  lower: 10
+  modes:
+  - auto
+  - dehumidify
+  activity: drying
+  actions:
+  - action: humidifier.turn_off
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+  - action: humidifier.set_humidity
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      humidity: '{{ target - 5 }}'
+  - action: humidifier.turn_on
+    target:
+      entity_id: '{{ primary }}'
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+  - action: fan.set_percentage
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+    data:
+      percentage: 100
+- name: 普通除湿
+  lower: 3
+  upper: 10
+  modes:
+  - auto
+  - dehumidify
+  activity: drying
+  actions:
+  - action: humidifier.turn_off
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+  - action: humidifier.set_humidity
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      humidity: '{{ target }}'
+  - action: humidifier.turn_on
+    target:
+      entity_id: '{{ primary }}'
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+  - action: fan.set_percentage
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+    data:
+      percentage: 25
+- name: 湿度舒适
+  lower: -3
+  upper: 3
+  activity: idle
+  actions:
+  - action: humidifier.turn_off
+    target:
+      entity_id: '{{ primary }}'
+  - action: humidifier.turn_off
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+  - action: fan.turn_off
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+- name: 加湿
+  upper: -3
+  modes:
+  - auto
+  - humidify
+  activity: humidifying
+  actions:
+  - action: humidifier.turn_off
+    target:
+      entity_id: '{{ primary }}'
+  - action: fan.turn_off
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+  - action: humidifier.set_humidity
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+    data:
+      humidity: '{{ target }}'
+  - action: humidifier.turn_on
+    target:
+      entity_id: '{{ auxiliaries[0] }}'

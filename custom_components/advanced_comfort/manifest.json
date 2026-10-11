@@ -1,0 +1,13 @@
+{
+  "domain": "advanced_comfort",
+  "name": "Advanced Comfort Controller",
+  "codeowners": [
+    "@aemediatodd"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/aemediatodd/advanced-comfort-controller",
+  "issue_tracker": "https://github.com/aemediatodd/advanced-comfort-controller/issues",
+  "iot_class": "calculated",
+  "requirements": [],
+  "version": "0.1.0"
+}

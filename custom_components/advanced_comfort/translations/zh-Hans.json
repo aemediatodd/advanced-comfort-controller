@@ -1,0 +1,184 @@
+{
+  "title": "高级温湿度控制器",
+  "config": {
+    "step": {
+      "user": {
+        "title": "高级温湿度控制器",
+        "data": {
+          "name": "名称",
+          "kind": "控制器类型"
+        }
+      },
+      "settings": {
+        "title": "传感器与设备",
+        "description": "温度使用 Home Assistant 系统单位，湿度使用百分比。副传感器可在动作模板中使用。更换设备后，请同步修改节点动作和停机动作。",
+        "data": {
+          "sensor": "主传感器（温控选温度，恒湿选湿度）",
+          "secondary_sensor": "副传感器（温控选湿度，恒湿选温度，可选）",
+          "primary": "主设备实体",
+          "auxiliaries": "副设备实体（可多个）",
+          "target": "初始目标值",
+          "min_target": "目标值下限",
+          "max_target": "目标值上限",
+          "hysteresis": "节点边界回差（温度单位 / 湿度百分点）",
+          "min_dwell": "动作切换最短间隔（秒）",
+          "sensor_timeout": "传感器上报超时（秒）"
+        }
+      },
+      "manage": {
+        "title": "节点设置",
+        "description": "已有 {count} 个节点。高优先级先匹配；下限包含、上限不包含。保存后控制器处于关闭状态，需要手动开启。",
+        "menu_options": {
+          "add_node": "添加节点",
+          "edit_node": "编辑节点",
+          "remove_node": "删除节点",
+          "settings": "传感器、设备及控制设置",
+          "safe_actions": "关闭、故障、未匹配时的动作",
+          "finish": "保存控制器",
+          "import_nodes": "批量导入节点（YAML）"
+        }
+      },
+      "node": {
+        "title": "编辑温差 / 湿差节点",
+        "description": "差值 = 测量值 − 目标值。留空表示无边界；模式留空适用于所有开启模式。动作模板可用 target、current、delta、primary、auxiliaries、temperature、humidity。节点动作应完整定义所有受控设备的状态，离开节点不会自动撤销动作。",
+        "data": {
+          "name": "节点名称",
+          "enabled": "启用节点",
+          "priority": "优先级（越大越优先）",
+          "lower": "差值下限（包含，可留空）",
+          "upper": "差值上限（不包含，可留空）",
+          "modes": "适用控制模式",
+          "activity": "显示的运行状态",
+          "actions": "进入节点时执行的动作"
+        }
+      },
+      "edit_node": {
+        "title": "选择要编辑的节点",
+        "data": {
+          "node": "节点"
+        }
+      },
+      "remove_node": {
+        "title": "选择要删除的节点",
+        "data": {
+          "node": "节点"
+        }
+      },
+      "safe_actions": {
+        "title": "停机动作",
+        "description": "关闭、主传感器失效、未匹配节点、卸载时执行。动作错误后也会尝试执行。请覆盖所有需要停止的设备；避免延迟和循环。自动生成的关机动作仅覆盖首次绑定的常见开关类实体。",
+        "data": {
+          "safe_actions": "停机动作"
+        }
+      },
+      "import_nodes": {
+        "title": "批量导入节点",
+        "description": "粘贴示例中的整个 YAML 列表。导入会追加节点，不会删除现有节点。请替换设备模式和实体。",
+        "data": {
+          "nodes": "节点列表"
+        }
+      }
+    },
+    "error": {
+      "invalid_settings": "目标值必须位于有效上下限内。",
+      "invalid_node": "请检查节点名称、上下限和动作；下限必须小于上限，动作不能为空。",
+      "invalid_actions": "请输入至少一个有效的 Home Assistant 动作。"
+    }
+  },
+  "options": {
+    "step": {
+      "settings": {
+        "title": "传感器与设备",
+        "description": "温度使用 Home Assistant 系统单位，湿度使用百分比。副传感器可在动作模板中使用。更换设备后，请同步修改节点动作和停机动作。",
+        "data": {
+          "sensor": "主传感器（温控选温度，恒湿选湿度）",
+          "secondary_sensor": "副传感器（温控选湿度，恒湿选温度，可选）",
+          "primary": "主设备实体",
+          "auxiliaries": "副设备实体（可多个）",
+          "target": "初始目标值",
+          "min_target": "目标值下限",
+          "max_target": "目标值上限",
+          "hysteresis": "节点边界回差（温度单位 / 湿度百分点）",
+          "min_dwell": "动作切换最短间隔（秒）",
+          "sensor_timeout": "传感器上报超时（秒）"
+        }
+      },
+      "manage": {
+        "title": "节点设置",
+        "description": "已有 {count} 个节点。高优先级先匹配；下限包含、上限不包含。保存后控制器处于关闭状态，需要手动开启。",
+        "menu_options": {
+          "add_node": "添加节点",
+          "edit_node": "编辑节点",
+          "remove_node": "删除节点",
+          "settings": "传感器、设备及控制设置",
+          "safe_actions": "关闭、故障、未匹配时的动作",
+          "finish": "保存控制器",
+          "import_nodes": "批量导入节点（YAML）"
+        }
+      },
+      "node": {
+        "title": "编辑温差 / 湿差节点",
+        "description": "差值 = 测量值 − 目标值。留空表示无边界；模式留空适用于所有开启模式。动作模板可用 target、current、delta、primary、auxiliaries、temperature、humidity。节点动作应完整定义所有受控设备的状态，离开节点不会自动撤销动作。",
+        "data": {
+          "name": "节点名称",
+          "enabled": "启用节点",
+          "priority": "优先级（越大越优先）",
+          "lower": "差值下限（包含，可留空）",
+          "upper": "差值上限（不包含，可留空）",
+          "modes": "适用控制模式",
+          "activity": "显示的运行状态",
+          "actions": "进入节点时执行的动作"
+        }
+      },
+      "edit_node": {
+        "title": "选择要编辑的节点",
+        "data": {
+          "node": "节点"
+        }
+      },
+      "remove_node": {
+        "title": "选择要删除的节点",
+        "data": {
+          "node": "节点"
+        }
+      },
+      "safe_actions": {
+        "title": "停机动作",
+        "description": "关闭、主传感器失效、未匹配节点、卸载时执行。动作错误后也会尝试执行。请覆盖所有需要停止的设备；避免延迟和循环。自动生成的关机动作仅覆盖首次绑定的常见开关类实体。",
+        "data": {
+          "safe_actions": "停机动作"
+        }
+      },
+      "import_nodes": {
+        "title": "批量导入节点",
+        "description": "粘贴示例中的整个 YAML 列表。导入会追加节点，不会删除现有节点。请替换设备模式和实体。",
+        "data": {
+          "nodes": "节点列表"
+        }
+      }
+    },
+    "error": {
+      "invalid_settings": "目标值必须位于有效上下限内。",
+      "invalid_node": "请检查节点名称、上下限和动作；下限必须小于上限，动作不能为空。",
+      "invalid_actions": "请输入至少一个有效的 Home Assistant 动作。"
+    }
+  },
+  "selector": {
+    "kind": {
+      "options": {
+        "temperature": "高级温控器",
+        "humidity": "高级恒湿器"
+      }
+    },
+    "activity": {
+      "options": {
+        "idle": "待机",
+        "cooling": "制冷",
+        "heating": "制热",
+        "fan": "送风",
+        "drying": "除湿",
+        "humidifying": "加湿"
+      }
+    }
+  }
+}

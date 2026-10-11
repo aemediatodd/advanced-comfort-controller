@@ -1,0 +1,253 @@
+# Import this entire list in Options > Import nodes.
+# primary: climate AC; auxiliaries: [big fan, small fan, climate heater].
+# Replace all preset/fan mode strings with actual device-supported values.
+# Fan presets and manual percentages can interact: keep only compatible calls.
+- name: 强冷
+  enabled: true
+  priority: 0
+  modes:
+  - auto
+  activity: cooling
+  lower: 1
+  actions:
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      hvac_mode: cool
+  - action: climate.set_temperature
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      temperature: '{{ target - 2 }}'
+  - action: climate.set_fan_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      fan_mode: high
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+  - action: fan.set_preset_mode
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+    data:
+      preset_mode: boost
+  - action: fan.set_percentage
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+    data:
+      percentage: 100
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+  - action: fan.set_preset_mode
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+    data:
+      preset_mode: direct
+  - action: fan.set_percentage
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+    data:
+      percentage: 100
+  - &id001
+    action: climate.turn_off
+    target:
+      entity_id: '{{ auxiliaries[2] }}'
+- name: 普通冷
+  enabled: true
+  priority: 0
+  modes:
+  - auto
+  activity: cooling
+  lower: 0.5
+  upper: 1
+  actions:
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      hvac_mode: cool
+  - action: climate.set_temperature
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      temperature: '{{ target - 2 }}'
+  - action: climate.set_fan_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      fan_mode: auto
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+  - action: fan.set_preset_mode
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+    data:
+      preset_mode: auto
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+  - action: fan.set_preset_mode
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+    data:
+      preset_mode: auto
+  - *id001
+- name: 轻冷
+  enabled: true
+  priority: 0
+  modes:
+  - auto
+  activity: cooling
+  lower: -1
+  upper: 0.5
+  actions:
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      hvac_mode: cool
+  - action: climate.set_temperature
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      temperature: '{{ target - 1 }}'
+  - action: climate.set_fan_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      fan_mode: auto
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+  - action: fan.set_preset_mode
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+    data:
+      preset_mode: normal
+  - action: fan.set_percentage
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+    data:
+      percentage: 25
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+  - action: fan.set_preset_mode
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+    data:
+      preset_mode: direct
+  - action: fan.set_percentage
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+    data:
+      percentage: 25
+  - *id001
+- name: 睡眠
+  enabled: true
+  priority: 0
+  modes:
+  - auto
+  activity: cooling
+  lower: -2
+  upper: -1
+  actions:
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      hvac_mode: cool
+  - action: climate.set_temperature
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      temperature: '{{ target }}'
+  - action: climate.set_fan_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      fan_mode: auto
+  - action: fan.turn_on
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+  - action: fan.set_preset_mode
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+    data:
+      preset_mode: sleep
+  - action: fan.turn_off
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+  - *id001
+- name: 送风
+  enabled: true
+  priority: 0
+  modes:
+  - auto
+  activity: fan
+  lower: -5
+  upper: -2
+  actions:
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      hvac_mode: fan_only
+  - action: climate.set_fan_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      fan_mode: auto
+  - &id002
+    action: fan.turn_off
+    target:
+      entity_id: '{{ auxiliaries[0] }}'
+  - &id003
+    action: fan.turn_off
+    target:
+      entity_id: '{{ auxiliaries[1] }}'
+  - *id001
+- name: 过冷保护
+  enabled: true
+  priority: 0
+  modes:
+  - auto
+  activity: heating
+  upper: -5
+  actions:
+  - *id002
+  - *id003
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      hvac_mode: heat
+  - action: climate.set_temperature
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      temperature: '{{ target }}'
+  - action: climate.set_fan_mode
+    target:
+      entity_id: '{{ primary }}'
+    data:
+      fan_mode: low
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: '{{ auxiliaries[2] }}'
+    data:
+      hvac_mode: heat
+  - action: climate.set_temperature
+    target:
+      entity_id: '{{ auxiliaries[2] }}'
+    data:
+      temperature: '{{ target }}'
+  - action: climate.set_preset_mode
+    target:
+      entity_id: '{{ auxiliaries[2] }}'
+    data:
+      preset_mode: low

@@ -1,0 +1,184 @@
+{
+  "title": "Advanced Comfort Controller",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Advanced Comfort Controller",
+        "data": {
+          "name": "Name",
+          "kind": "Controller type"
+        }
+      },
+      "settings": {
+        "title": "Sensors and devices",
+        "description": "Temperature uses the HA system unit; humidity uses percentage points. The secondary sensor is available in action templates. After changing devices, update node and shutdown actions too.",
+        "data": {
+          "sensor": "Control sensor",
+          "secondary_sensor": "Secondary sensor (humidity for thermostat; temperature for hygrostat)",
+          "primary": "Primary entity",
+          "auxiliaries": "Auxiliary entities",
+          "target": "Initial target",
+          "min_target": "Minimum target",
+          "max_target": "Maximum target",
+          "hysteresis": "Boundary hysteresis (temperature unit / % RH)",
+          "min_dwell": "Minimum interval between action changes (seconds)",
+          "sensor_timeout": "Sensor report timeout (seconds)"
+        }
+      },
+      "manage": {
+        "title": "Controller nodes",
+        "description": "{count} nodes. Higher priority matches first. Lower bounds are inclusive; upper bounds exclusive. Saving leaves the controller off; enable it explicitly.",
+        "menu_options": {
+          "add_node": "Add node",
+          "edit_node": "Edit node",
+          "remove_node": "Remove node",
+          "settings": "Sensors, devices and control settings",
+          "safe_actions": "Shutdown / fault / no-match actions",
+          "finish": "Save controller",
+          "import_nodes": "Import nodes (YAML)"
+        }
+      },
+      "node": {
+        "title": "Edit a delta node",
+        "description": "Delta = measured − target. Blank bounds are unbounded; blank modes match every enabled mode. Templates: target, current, delta, primary, auxiliaries, temperature, humidity. Each node must define complete device states; leaving a node does not undo its actions.",
+        "data": {
+          "name": "Node name",
+          "enabled": "Enabled",
+          "priority": "Priority (higher first)",
+          "lower": "Delta lower bound (inclusive; optional)",
+          "upper": "Delta upper bound (exclusive; optional)",
+          "modes": "Applicable controller modes",
+          "activity": "Displayed activity",
+          "actions": "Actions on entering this node"
+        }
+      },
+      "edit_node": {
+        "title": "Choose node to edit",
+        "data": {
+          "node": "Node"
+        }
+      },
+      "remove_node": {
+        "title": "Choose node to remove",
+        "data": {
+          "node": "Node"
+        }
+      },
+      "safe_actions": {
+        "title": "Shutdown actions",
+        "description": "Runs on off, invalid/stale control sensor, no matching node and unload; also attempted after action errors. Include every device that must stop. Avoid delays and loops. Generated actions cover common toggle entities initially bound.",
+        "data": {
+          "safe_actions": "Shutdown actions"
+        }
+      },
+      "import_nodes": {
+        "title": "Import nodes",
+        "description": "Paste the complete YAML list from an example. Imported nodes are appended. Replace device modes and entities to match your devices.",
+        "data": {
+          "nodes": "Node list"
+        }
+      }
+    },
+    "error": {
+      "invalid_settings": "Target must be within valid minimum and maximum limits.",
+      "invalid_node": "Check name, bounds and actions. Lower must be below upper, and actions cannot be empty.",
+      "invalid_actions": "Enter at least one valid Home Assistant action."
+    }
+  },
+  "options": {
+    "step": {
+      "settings": {
+        "title": "Sensors and devices",
+        "description": "Temperature uses the HA system unit; humidity uses percentage points. The secondary sensor is available in action templates. After changing devices, update node and shutdown actions too.",
+        "data": {
+          "sensor": "Control sensor",
+          "secondary_sensor": "Secondary sensor (humidity for thermostat; temperature for hygrostat)",
+          "primary": "Primary entity",
+          "auxiliaries": "Auxiliary entities",
+          "target": "Initial target",
+          "min_target": "Minimum target",
+          "max_target": "Maximum target",
+          "hysteresis": "Boundary hysteresis (temperature unit / % RH)",
+          "min_dwell": "Minimum interval between action changes (seconds)",
+          "sensor_timeout": "Sensor report timeout (seconds)"
+        }
+      },
+      "manage": {
+        "title": "Controller nodes",
+        "description": "{count} nodes. Higher priority matches first. Lower bounds are inclusive; upper bounds exclusive. Saving leaves the controller off; enable it explicitly.",
+        "menu_options": {
+          "add_node": "Add node",
+          "edit_node": "Edit node",
+          "remove_node": "Remove node",
+          "settings": "Sensors, devices and control settings",
+          "safe_actions": "Shutdown / fault / no-match actions",
+          "finish": "Save controller",
+          "import_nodes": "Import nodes (YAML)"
+        }
+      },
+      "node": {
+        "title": "Edit a delta node",
+        "description": "Delta = measured − target. Blank bounds are unbounded; blank modes match every enabled mode. Templates: target, current, delta, primary, auxiliaries, temperature, humidity. Each node must define complete device states; leaving a node does not undo its actions.",
+        "data": {
+          "name": "Node name",
+          "enabled": "Enabled",
+          "priority": "Priority (higher first)",
+          "lower": "Delta lower bound (inclusive; optional)",
+          "upper": "Delta upper bound (exclusive; optional)",
+          "modes": "Applicable controller modes",
+          "activity": "Displayed activity",
+          "actions": "Actions on entering this node"
+        }
+      },
+      "edit_node": {
+        "title": "Choose node to edit",
+        "data": {
+          "node": "Node"
+        }
+      },
+      "remove_node": {
+        "title": "Choose node to remove",
+        "data": {
+          "node": "Node"
+        }
+      },
+      "safe_actions": {
+        "title": "Shutdown actions",
+        "description": "Runs on off, invalid/stale control sensor, no matching node and unload; also attempted after action errors. Include every device that must stop. Avoid delays and loops. Generated actions cover common toggle entities initially bound.",
+        "data": {
+          "safe_actions": "Shutdown actions"
+        }
+      },
+      "import_nodes": {
+        "title": "Import nodes",
+        "description": "Paste the complete YAML list from an example. Imported nodes are appended. Replace device modes and entities to match your devices.",
+        "data": {
+          "nodes": "Node list"
+        }
+      }
+    },
+    "error": {
+      "invalid_settings": "Target must be within valid minimum and maximum limits.",
+      "invalid_node": "Check name, bounds and actions. Lower must be below upper, and actions cannot be empty.",
+      "invalid_actions": "Enter at least one valid Home Assistant action."
+    }
+  },
+  "selector": {
+    "kind": {
+      "options": {
+        "temperature": "Thermostat",
+        "humidity": "Hygrostat"
+      }
+    },
+    "activity": {
+      "options": {
+        "idle": "Idle",
+        "cooling": "Cooling",
+        "heating": "Heating",
+        "fan": "Fan",
+        "drying": "Drying",
+        "humidifying": "Humidifying"
+      }
+    }
+  }
+}
