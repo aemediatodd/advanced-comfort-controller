@@ -38,7 +38,7 @@ class ComfortController(RestoreEntity):
         }
         self.target = self.config["target"]
         self.control_mode = "auto"
-        self.enabled = False
+        self._control_enabled = False
         self.measurement = None
         self.temperature = None
         self.humidity = None
@@ -146,7 +146,7 @@ class ComfortController(RestoreEntity):
             if mode not in self.allowed_modes:
                 raise HomeAssistantError("Unsupported controller mode")
             self.control_mode = mode
-        self.enabled = enabled
+        self._control_enabled = enabled
         await self.async_evaluate()
 
     async def _stop_actions(self):
@@ -185,7 +185,7 @@ class ComfortController(RestoreEntity):
             self.humidity = second if is_temp else self.measurement
             node = None
             desired_status = "off"
-            if self.enabled:
+            if self._control_enabled:
                 if self.measurement is None:
                     desired_status = "sensor_fault"
                 else:

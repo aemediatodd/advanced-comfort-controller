@@ -17,7 +17,7 @@ class AdvancedHygrostat(ComfortController, HumidifierEntity):
 
     @property
     def is_on(self):
-        return self.enabled
+        return self._control_enabled
 
     @property
     def mode(self):
@@ -43,7 +43,7 @@ class AdvancedHygrostat(ComfortController, HumidifierEntity):
         await self.async_set_target(humidity)
 
     async def async_set_mode(self, mode):
-        await self.async_enable(self.enabled, mode)
+        await self.async_enable(self._control_enabled, mode)
 
     async def async_turn_on(self, **kwargs):
         await self.async_enable(True)

@@ -44,11 +44,11 @@ class AdvancedThermostat(ComfortController, ClimateEntity):
 
     @property
     def hvac_mode(self):
-        return HVACMode(self.control_mode) if self.enabled else HVACMode.OFF
+        return HVACMode(self.control_mode) if self._control_enabled else HVACMode.OFF
 
     @property
     def hvac_action(self):
-        if not self.enabled:
+        if not self._control_enabled:
             return HVACAction.OFF
         if not self.active_node or not self._applied or self.last_error:
             return HVACAction.IDLE
